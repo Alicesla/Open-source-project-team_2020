@@ -1,0 +1,31 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+ //在反中序遍历（右根左）过程中，记录过程中的和，再把和加到当前遍历的节点上即可
+//在遍历过程中利用栈实现
+class Solution {
+public:
+    TreeNode* convertBST(TreeNode* root) {
+        stack<TreeNode*>s;
+        TreeNode *p=root;
+        int sum=0;
+        while(p||!s.empty()){
+            while(p){
+                s.push(p);
+                p=p->right;
+            }
+            TreeNode *q=s.top();
+            s.pop();
+            sum=sum+q->val;
+            q->val=sum;
+            p=q->left;
+        }
+        return root;
+    }
+};
