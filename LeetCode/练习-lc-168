@@ -1,0 +1,42 @@
+#include<iostream>
+#include<algorithm>  //使用reverse函数需要加的头文件
+using namespace std;
+
+class Solution {
+public:
+    string convertToTitle(int n) {   //函数类型为string型
+        string ans = "";    //先定义一个空字符串
+        while (n > 0) {
+            n -= 1;    //关键步骤，每次n自减1
+            ans.push_back('A' + (n % 26));  //使用字符串的push_back每次推入
+            n /= 26;  
+        }
+        reverse(ans.begin(), ans.end());  //使用reverse函数调整字符串中字符的位置
+        return ans;
+    }
+};
+
+/*
+class Solution {    //思路稍微不同的解法
+public:
+    string convertToTitle(int n) {
+        string res = "";
+        while(n != 0)
+        {
+            res.insert(0, 1, 'A'+(n-1)%26);  //每次使用insert函数在字符串第0个位置插入1个字符，因此最后不需要额外调整位置
+            n = (n-1) / 26;
+        }
+        return res;
+    }
+};
+*/
+
+int main(){
+	Solution s;
+	int n;
+	while(cin>>n && n){      //设置当输入0时跳出
+		string str=s.convertToTitle(n);  
+		cout<<str<<endl;  
+	}
+	return 0;
+} 
