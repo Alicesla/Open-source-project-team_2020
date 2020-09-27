@@ -1,0 +1,31 @@
+class Solution {
+public:
+    vector<vector<int>> ret;
+    vector<int> path;
+
+    //深度优先搜索
+    void dfs(TreeNode* root, int sum) {
+        //当节点为空，直接返回
+        if (root == nullptr) {
+            return;
+        }
+        //节点不为空，将节点值压入path向量
+        path.emplace_back(root->val);
+        //从要求计算的总和中减去已压入path向量的节点值
+        sum -= root->val;
+        //如果当前节点为叶子节点，并且此时的sum正好为要求的值，将当前的path向量压入ret
+        if (root->left == nullptr && root->right == nullptr && sum == 0) {
+            ret.emplace_back(path);
+        }
+        //递归搜索左子树和右子树
+        dfs(root->left, sum);
+        dfs(root->right, sum);
+        
+        path.pop_back();
+    }
+
+    vector<vector<int>> pathSum(TreeNode* root, int sum) {
+        dfs(root, sum);
+        return ret;
+    }
+};
