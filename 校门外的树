@@ -1,0 +1,36 @@
+#include <iostream>
+#include <cstdio> 
+using namespace std;
+int main(){
+	int L,M;//L表路的长度，M表区间数 
+	scanf("%d%d",&L,&M);
+	int tree=L+1,count=0;//tree表剩下的树，count表被合并的区间数 
+	int area[M][2];//area用于存储各个区间 
+	for(int i=0;i<M;i++){
+		int cur=i-count;//cur表当前进行存储的行 
+		scanf("%d%d",&area[cur][0],&area[cur][1]);
+		for(int j=0;j<cur;j++){
+			if(area[j][0]>=area[cur][0]&&area[j][0]<=area[cur][1]&&area[j][1]>area[cur][1]) {//j行只有区间前端点位于cur行区间内 
+				area[j][0]=area[cur][0];
+				count++;
+			}
+			else if(area[j][1]>=area[cur][0]&&area[j][1]<=area[cur][1]&&area[j][0]<area[cur][0]) {//j行只有区间后端点位于cur行区间内 
+				area[j][1]=area[cur][1];
+				count++;
+			}
+			else if(area[cur][1]<=area[j][1]&&area[cur][0]>=area[j][0]){//cur行区间位于j行区间内 
+				count++;
+			}
+			else if(area[cur][1]>=area[j][1]&&area[cur][0]<=area[j][0]) {//j行区间位于cur行区间内
+				area[j][1]=area[cur][1];
+				area[j][0]=area[cur][0];
+				count++;
+			}
+		}
+	}
+	for(int i=0;i<M-count;i++){
+		tree-=(area[i][1]-area[i][0]+1);
+	}
+	printf("%d",tree);
+	return 0; 
+}
