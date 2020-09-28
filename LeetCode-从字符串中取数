@@ -1,0 +1,85 @@
+#include <iostream>
+#include <cstdio>
+#define MAX 500
+using namespace std;
+
+int ten_power(int a){
+	int b=1;
+	for(int i=0;i<a;i++){
+		b*=10;
+	}
+	return b;
+}
+
+int main(){
+	char a[MAX+10];
+	while(gets(a)){
+		bool start_num=false,dot=false;
+		char num[20];
+		int j,dot_pos;
+		for(int i=0;a[i];i++){
+			if(a[i]>='0'&&a[i]<='9'){
+				if(!start_num) {
+					start_num=true;
+					j=0;
+					num[j++]=a[i];
+				}
+				else {
+					num[j++]=a[i];
+				}
+			}
+			else if(a[i]=='.'){
+				if(start_num&&a[i+1]<='9'&&a[i+1]>='0') {
+					dot=true;
+					dot_pos=j;
+					num[j++]=a[i];
+				}
+			}
+			else {
+				if(start_num){
+					start_num=false;
+				    double a=0;
+					if(dot) {
+					    for(int k=0;k<dot_pos;k++){
+						    int tmp=num[k]-'0';
+						    a+=tmp*ten_power(dot_pos-k-1);
+				    	}
+				    	for(int n=dot_pos+1;n<j;n++){
+							int tmp=num[n]-'0';
+							a+=(double)tmp/ten_power(n-dot_pos);
+						}
+					}
+				    else {
+					    for(int k=0;k<j;k++){
+						    int tmp=num[k]-'0';
+						    a+=tmp*ten_power(j-k-1);
+					    }
+				    }
+					printf("%.6lf\n",a);
+				}
+			}
+		}
+		if(start_num) {
+			start_num=false;
+			double a=0;
+			if(dot) {
+				for(int k=0;k<dot_pos;k++){
+					int tmp=num[k]-'0';
+					a+=tmp*ten_power(dot_pos-k-1);
+				}
+				for(int n=dot_pos+1;n<j;n++){
+					int tmp=num[n]-'0';
+					a+=(double)tmp/ten_power(n-dot_pos);
+				}
+			}
+			else {
+			    for(int k=0;k<j;k++){
+					int tmp=num[k]-'0';
+					a+=tmp*ten_power(j-k-1);
+				}
+			}
+			printf("%.6lf\n",a);
+		}
+	}
+	return 0;
+}

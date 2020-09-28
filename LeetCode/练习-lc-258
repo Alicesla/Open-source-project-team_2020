@@ -1,0 +1,44 @@
+#include<iostream>
+using namespace std;
+
+/*     个人解法，时间复杂度太高
+class Solution {
+public:
+    int add(int num){
+        int sum=0;
+        while(num!=0){
+            sum+=num%10;
+            num/=10;
+        }
+        return sum;
+    }
+    int addDigits(int num) {
+        int a=add(num);
+        while(a/10!=0) add(a);
+        cout<<a<<endl;
+        return 0;
+    }
+};
+*/
+
+class Solution {
+public:
+    int addDigits(int num) {
+        if(num>9)
+        {
+            num=num%9;
+            if(num==0)
+                cout<<9<<endl;
+        }
+        cout<<num<<endl;
+    }
+};
+
+int main(){
+	Solution s;
+	int a;
+	while(cin>>a && a){
+		s.addDigits(a);
+	}
+	return 0;
+}

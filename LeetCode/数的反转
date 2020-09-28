@@ -1,0 +1,27 @@
+#include <iostream>
+#include <cstdio> 
+using namespace std;
+int main(){
+	long long n,count=0;//count用于表示变量的位数 
+	cin>>n;
+	unsigned long long ABS;
+	if(n<0) {//ABS表示n的绝对值 
+	    cout<<"-"; 
+		ABS=-n;
+    }
+	else ABS=n;
+	int a[11];
+	while (ABS>9){
+		++count;
+		a[count]=ABS%10;
+		ABS/=10; 
+	}
+	a[++count]=ABS;
+	int i=1;//i用于指示第一个非零位 
+	while(i!=count) {
+		if(a[i]==0) i++;
+		else break;
+	}
+	for(int j=i;j<=count;j++) cout<<a[j];
+	return 0; 
+}

@@ -1,0 +1,30 @@
+/*
+2的幂
+给定一个整数，编写一个函数来判断它是否是 2 的幂次方。
+*/
+
+#include<iostream>
+using namespace std;
+
+class Solution {
+public:
+    bool isPowerOfTwo(int n) {
+        if(n<0) return false;
+        else if(n==1) return true;
+        else{
+            while(n>1 && n%2==0) n/=2; 
+            if(n==1) return true;
+            else return false;
+        }
+    }
+};
+
+int main(){
+	Solution s;
+	int a;
+	while(cin>>a && a){
+		bool b=s.isPowerOfTwo(a);
+		if(b) cout<<"true"<<endl;
+		else cout<<"false"<<endl;
+	}
+}
