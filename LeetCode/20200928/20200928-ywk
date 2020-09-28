@@ -1,0 +1,40 @@
+
+class Solution {
+public:
+
+    Node* connect(Node* root) {
+        queue<Node*> myQueue;
+        if(root == NULL)
+        {
+            return root;
+        }
+        Node * temp;
+        myQueue.push(root);
+        int n = 0;
+        Node * last;
+        while(!myQueue.empty())
+        {
+            n = myQueue.size();
+            last = NULL;
+            for(int i = 0; i < n; ++i)
+            {
+                temp = myQueue.front();
+                if(temp->left != NULL)
+                {
+                    myQueue.push(temp->left);
+                }
+                if(temp->right != NULL)
+                {
+                    myQueue.push(temp->right);
+                }
+                if(i != 0)
+                {
+                    last->next = temp;
+                }
+                myQueue.pop();
+                last = temp;
+            }           
+        }
+        return root;
+    }
+};
