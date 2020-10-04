@@ -3,8 +3,7 @@ class Solution
 public:
     ListNode *addTwoNumbers(ListNode *l1, ListNode *l2)
     {
-        auto i = l1, j = l2, shorter = l1, longer = l2;
-        auto res = l2;
+        auto i = l1, j = l2, shorter = l1, longer = l2, res = l2;
         for (; i != nullptr && j != nullptr; i = i->next, j = j->next)
             ;
         if (i)
