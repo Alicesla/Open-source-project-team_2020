@@ -1,0 +1,34 @@
+class Solution:
+    def sumOfDistancesInTree(self, N: int, edges: List[List[int]]) -> List[int]:
+        def dfs(node, parent):
+            """计算root的res和cnt
+            """
+            for child in graph[node]:
+                if child != parent:
+                    dfs(child, node)
+                    cnt[node] += cnt[child]
+                    res[node] += res[child] + cnt[child]
+        
+        def dfs2(node, parent):
+            """根据root的res计算其余节点
+            """
+            for child in graph[node]:
+                if child != parent:
+                    res[child] = res[node] - 2*cnt[child] + N
+                    dfs2(child, node)
+        
+        res = [0] * N
+        cnt = [1] * N
+        graph = collections.defaultdict(list)
+        for e0, e1 in edges:
+            # 由于图是无向图，且答案是计算到其他所有节点的距离，因此边需要加双向的。
+            graph[e0].append(e1)
+            graph[e1].append(e0)
+        dfs(0, -1)
+        dfs2(0, -1)
+        return res
+
+作者：houlong66-2
+链接：https://leetcode-cn.com/problems/sum-of-distances-in-tree/solution/xue-xi-bi-ji-834-by-houlong66-2/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
