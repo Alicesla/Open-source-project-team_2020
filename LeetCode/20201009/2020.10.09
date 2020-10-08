@@ -1,3 +1,5 @@
+/*双指针，和复试题目一样*/
+
 /**
  * Definition for singly-linked list.
  * struct ListNode {
