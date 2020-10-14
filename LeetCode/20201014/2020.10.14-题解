@@ -39,7 +39,7 @@ public:
         for (int i = 0; i < 26; i++) {
             for (int j = 0; j < minfreq[i]; j++) {
             //此处压入不能简单使用push_back，因为类型不同（将char类型压入string数组），需要用emplace_back，括号内的第一个参数为每个字符压入的次数
-                ans.emplace_back(1,i + 'a');
+                ans.emplace_back(1 , i + 'a');
             }
         }
         return ans;
