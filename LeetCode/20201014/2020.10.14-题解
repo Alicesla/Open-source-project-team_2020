@@ -20,7 +20,7 @@ A[i][j]是小写字母
 //创建两个vector数组，一个用于计数每个字符串中每个字符出现的次数，每到下一个字符串，此数组重新初始化为全0；另一个用于存储所有字符串中每个字符出现的最少次数
 class Solution {
 public:
-    vector<string> commonChars(vector<string>& A) {
+    vector<string> commonChars(vector<string> A) {
         //用于存储所有字符串中每个字符出现的最少次数
         vector<int> minfreq(26, INT_MAX);
         //计数每个字符串中每个字符出现的次数
@@ -36,8 +36,8 @@ public:
             }
         }
         vector<string> ans;
-        for (int i = 0; i < 26; ++i) {
-            for (int j = 0; j < minfreq[i]; ++j) {
+        for (int i = 0; i < 26; i++) {
+            for (int j = 0; j < minfreq[i]; j++) {
             //此处压入不能简单使用push_back，因为类型不同（将char类型压入string数组），需要用emplace_back，括号内的第一个参数为每个字符压入的次数
                 ans.emplace_back(1,i + 'a');
             }
