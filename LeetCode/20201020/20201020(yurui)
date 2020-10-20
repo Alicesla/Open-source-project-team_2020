@@ -1,0 +1,77 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+//采用递归的方法，先判断根节点，再判断左右子树同时相同时，返回true
+class Solution {
+public:
+    bool isSameTree(TreeNode* p, TreeNode* q) {
+        if(p==NULL&&q==NULL) return true;
+        else if(p==NULL&&q!=NULL||p!=NULL&&q==NULL) 
+        return false;
+        else
+        {
+            if(p->val!=q->val) return false;
+            else
+            { return isSameTree(p->left,q->left)&&isSameTree(p->right,q->right);
+              }
+           
+        }
+    }
+};
+//通过广度优先算法
+比较两个节点的值，如果两个节点的值不相同则两个二叉树一定不同；
+
+如果两个节点的值相同，则判断两个节点的子节点是否为空，如果只有一个节点的左子节点为空，或者只有一个节点的右子节点为空，则两个二叉树的结构不同，因此两个二叉树一定不同；
+
+如果两个节点的子节点的结构相同，则将两个节点的非空子节点分别加入两个队列，子节点加入队列时需要注意顺序，如果左右子节点都不为空，则先加入左子节点，后加入右子节点。
+
+如果搜索结束时两个队列同时为空，则两个二叉树相同。如果只有一个队列为空，则两个二叉树的结构不同，因此两个二叉树不同。
+
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    bool isSameTree(TreeNode* p, TreeNode* q) {
+        if(p==NULL&&q==NULL) return true;
+        else if(p==NULL&&q!=NULL||p!=NULL&&q==NULL) 
+        return false;
+        queue<TreeNode*>p1;queue<TreeNode*>q1;
+        p1.push(p);q1.push(q);
+        while(!p1.empty()&&!q1.empty())
+        {
+           TreeNode*node1=p1.front();
+           TreeNode*node2=q1.front();
+           p1.pop();
+           q1.pop();
+           if(node1->val!=node2->val)
+           return false;
+           if(node1->left==NULL&&node2->left!=NULL||node2->left==NULL&&node1->left!=NULL)
+           return false;
+           if(node1->right==NULL&&node2->right!=NULL||node2->right==NULL&&node1->right!=NULL)
+           return false;
+           if(node1->left) p1.push(node1->left);
+           if(node1->right) p1.push(node1->right);
+           if(node2->left) q1.push(node2->left);
+           if(node2->right) q1.push(node2->right);
+        }
+        return p1.empty()&&q1.empty();
+    }
+};
