@@ -1,0 +1,24 @@
+class Solution {
+public:
+    bool uniqueOccurrences(vector<int>& arr) {
+    set<int> res;
+    sort(arr.begin(),arr.end());
+    int first=0,end=0;
+    int size=arr.size();
+    for(int i=1;i<size;i++)
+    {
+         if(arr[i]==arr[i-1])
+         end=i;
+         else
+         {
+             if(res.count(end-first+1)!=0) return false;
+             else  res.insert(end-first+1);
+              first=end+1;
+              end=first;
+         }
+
+    }
+    if(res.count(end-first+1)!=0) return false;
+    else return true;
+    }
+};
