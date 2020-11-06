@@ -1,0 +1,30 @@
+class Solution {
+public:
+    vector<int> sortByBits(vector<int>& arr) {
+     int n=arr.size();
+     for(int i=0;i<n-1;i++)
+     for(int j=0;j<n-i-1;j++)
+     {  
+        if(tobinary(arr[j])>tobinary(arr[j+1]))
+        swap(arr[j],arr[j+1]);
+        else if(tobinary(arr[j])==tobinary(arr[j+1]))
+        {
+            if(arr[j]>arr[j+1])
+            swap(arr[j],arr[j+1]);
+        }
+        else
+        continue;
+     }
+     return arr;
+    }
+    int tobinary(int m)
+    {   int count=0;
+        if(m==0) return 0;
+        else
+        {
+            if(m%2==1) count++;
+            count+=tobinary(m/2);
+        }
+        return count;
+    }
+};
