@@ -1,0 +1,47 @@
+class Solution {
+public:
+    string sortString(string s) {
+       string res;
+       sort(s.begin(),s.end());
+       stack<int> finger;
+       queue<int> finger1;
+       while (!s.empty())
+       {   res.push_back(s[0]);
+           finger.push(0);
+          for(int i=1;i<s.size();i++)
+          { 
+              if(s[i]>s[i-1])
+              {res.push_back(s[i]);
+              finger.push(i);
+              }
+          }
+          while(!finger.empty())
+          {
+              s.erase(s.begin()+finger.top());
+              finger.pop();
+          }
+          int n=s.size();
+          if(n!=0)
+          {
+               res.push_back(s[s.size()-1]);
+           finger1.push(s.size()-1);
+          }
+          else
+          break;
+           
+          for(int i=n-2;i>=0;i--)
+          { 
+              if(s[i]<s[i+1])
+              {res.push_back(s[i]);
+              finger1.push(i);
+              }
+          }
+          while(!finger1.empty())
+          {
+              s.erase(s.begin()+finger1.front());
+              finger1.pop();
+          }
+    }
+    return res;
+    }
+};
