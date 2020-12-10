@@ -1,0 +1,19 @@
+int** subsets(int* nums, int numsSize, int* returnSize, int** returnColumnSizes) {//*returnSize指的是总共有多少子集；*returnColumnSizes指向的是一个数组，这个数组存放的是每一个子集的大小 
+    int** ans = malloc(sizeof(int*) * (1 << numsSize));
+    *returnColumnSizes = malloc(sizeof(int) * (1 << numsSize));
+    *returnSize = 1 << numsSize;
+    int t[numsSize];//用于进行枚举时读入子集元素 
+    for (int mask = 0; mask < (1 << numsSize); ++mask) {//按枚举顺序读取 
+        int tSize = 0;//记录子集大小 
+        for (int i = 0; i < numsSize; ++i) {
+            if (mask & (1 << i)) {//判断数组中的各个元素是否需要放入子集 
+                t[tSize++] = nums[i];
+            }
+        }
+        int* tmp = malloc(sizeof(int) * tSize);//分配一片空间存放子集 
+        memcpy(tmp, t, sizeof(int) * tSize);
+        (*returnColumnSizes)[mask] = tSize;//将该子集的大小记录在*returnColumnSizes数组 
+        ans[mask] = tmp;//将该子集放入要返回的数组中 
+    }
+    return ans;
+}

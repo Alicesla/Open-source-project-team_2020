@@ -1,0 +1,33 @@
+/*
+   Author: litang
+   Description: 
+   Since: 2020/09/23
+          09:34:26
+*/
+
+class Solution
+{
+public:
+    //将t2加到t1上
+    //两棵树步调一致进行遍历
+    //本题前中后序均可
+    //这里采用自底向上的逻辑
+    void LRD(TreeNode *&t1, TreeNode *t2)
+    {
+        //t2为空, 不用做任何操作
+        if (!t2)
+            return;
+        //仅t1空,需要为t1创建一个新节点
+        if (!t1)
+            t1 = new TreeNode(0);
+        //t1, t2均不空
+        LRD(t1->left, t2->left);
+        LRD(t1->right, t2->right);
+        t1->val += t2->val;
+    }
+    TreeNode *mergeTrees(TreeNode *t1, TreeNode *t2)
+    {
+        LRD(t1, t2);
+        return t1;
+    }
+};

@@ -1,0 +1,15 @@
+class Solution {
+public:
+    void postorderTraversal(TreeNode* root,vector<int>& post) {
+        if(root!=nullptr){
+            postorderTraversal(root->left,post);
+            postorderTraversal(root->right,post);
+            post.push_back(root->val);
+        }
+    }
+    vector<int> postorderTraversal(TreeNode* root){
+        vector<int> post;
+        postorderTraversal(root,post);
+        return post;
+    }
+};

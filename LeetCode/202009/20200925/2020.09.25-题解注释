@@ -1,0 +1,78 @@
+#include<iostream>
+//使用vector需要添加的头文件
+#include<vector>
+//使用unordered_map需要添加的头文件，其中键值不会重复
+#include<unordered_map>
+using namespace std;
+
+//树节点结构定义
+struct TreeNode {
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+    TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+};
+
+class Solution {
+//存放每次构造树时当前子树根节点的下标
+int post_idx;
+//存放树的节点值和下标的映射
+    unordered_map<int, int> idx_map;
+public:
+    TreeNode* helper(int in_left, int in_right, vector<int>& inorder, vector<int>& postorder){
+        // 如果这里没有节点构造二叉树了，就结束
+        if (in_left > in_right) {
+            return nullptr;
+        }
+        // 选择 post_idx 位置的元素作为当前子树根节点
+        int root_val = postorder[post_idx];
+//以此位置元素值为键值创建一个新节点
+        TreeNode* root = new TreeNode(root_val);
+
+        // 根据 root 所在位置分成左右两棵子树
+        int index = idx_map[root_val];
+
+        // 下标减一，即每次将后序遍历最后一个元素剔除
+        post_idx--;
+        // 构造右子树
+        root->right = helper(index + 1, in_right, inorder, postorder);
+        // 构造左子树
+        root->left = helper(in_left, index - 1, inorder, postorder);
+        return root;
+    }
+    TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {
+        // 从后序遍历的最后一个元素开始
+        post_idx = (int)postorder.size() - 1;
+
+        // 建立（元素，下标）键值对的哈希表
+        int idx = 0;
+//对于所有存在于inorder中的val，自动匹配其类型，建立哈希表
+        for (auto& val : inorder) {
+            idx_map[val] = idx++;
+        }
+        return helper(0, (int)inorder.size() - 1, inorder, postorder);
+    }
+};
+
+int PreOrder(TreeNode *T)   //先序遍历 
+{
+    if(T!=NULL)
+    {
+        cout<<T->val<<" ";
+        PreOrder(T->left);
+        PreOrder(T->right);
+    }
+}
+
+int main(){
+//vector<int>的一种定义方式
+	int a[5]={9,3,15,20,7};
+	vector<int> inorder(a,a+5);
+	//int b[5]={9,3,15,20,7};
+//vector<int>的另外一种定义方式（直接定义）
+	vector<int> postorder({9,3,15,20,7});
+	Solution s;
+	TreeNode* tree=s.buildTree(inorder, postorder);
+	PreOrder(tree);
+	return 0;
+}

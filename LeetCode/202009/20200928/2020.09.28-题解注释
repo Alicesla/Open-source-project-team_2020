@@ -1,0 +1,39 @@
+class Solution {
+public:
+Node* connect(Node* root) {
+//当节点为空，返回空指针
+        if (!root) {
+            return nullptr;
+        }
+//定义一个Node*类型的队列
+        queue<Node*> q;
+//将根节点压入队列中
+        q.push(root);
+        while (!q.empty()) {
+ //当队列非空时，用n表示队列的大小
+            int n = q.size();
+ //定义一个Node*类型的last指针用于构造每层的链表
+            Node *last = nullptr;
+            for (int i = 1; i <= n; ++i) {
+//定义Node*类型的f，存放队列的队首元素
+                Node *f = q.front();
+//弹出队首元素
+                q.pop();
+//将下一层元素压入队列中
+                if (f->left) {
+                    q.push(f->left);
+                }
+                if (f->right) {
+                    q.push(f->right);
+                }
+//从第二个元素开始，构造链表
+                if (i != 1) {
+                    last->next = f;
+                }
+//把f赋值给此行的链表的第一个元素
+                last = f;
+            }
+        }
+        return root;
+    }
+};
