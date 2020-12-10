@@ -1,0 +1,38 @@
+class Solution {
+public:
+    bool isPossible(vector<int>& nums) {
+     unordered_map<int,int> countmap;
+     unordered_map<int,int> endmap;
+     int n=nums.size();
+     for(int i=0;i<n;i++)
+     {
+         countmap[nums[i]]++;
+     }
+     for(int i=0;i<n;i++)
+     {
+         if(countmap[nums[i]]>0)
+         {
+             int precount=endmap[nums[i]-1];
+             if(precount>0)
+             {
+               countmap[nums[i]]--;
+               endmap[nums[i]-1]--;
+               endmap[nums[i]]++;
+             }
+             else
+             {
+                if(countmap[nums[i]+1]>0&&countmap[nums[i]+2]>0)
+                {
+                   countmap[nums[i]]--;
+                   countmap[nums[i]+1]--;
+                   countmap[nums[i]+2]--;
+                   endmap[nums[i]+2]++;
+                }
+                else
+                return false;
+             }
+         }
+     }
+     return true;
+    }
+};

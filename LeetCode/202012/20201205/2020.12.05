@@ -1,0 +1,31 @@
+class Solution {
+public:
+    int max(int a,int b){
+        if (a>b) return a;
+        return b;
+    }
+    int leastInterval(vector<char>& tasks, int n) {
+        if (tasks.size()<1||n<1)return tasks.size();
+        int arr[26];
+        for (int i=0;i<26;i++){
+            arr[i]=0;
+        }
+        for (int i=0;i<tasks.size();i++){
+            arr[tasks[i]-'A']++;
+        }
+        sort(arr,arr+26);
+        vector<int>vec;
+        int max_count=0;
+        for (int i=25;i>=0;i--){
+            if (arr[i]!=0){
+                vec.push_back(arr[i]);
+            }
+            if (arr[i]==arr[25]) max_count ++;
+        }
+        if (max_count>n) return tasks.size();
+        int kongwei=max((arr[25]-1)*(n+1-max_count),tasks.size()-arr[25]*max_count);
+        //cout<<kongwei<<max_count<<arr[25]<<"sss";
+        return arr[25]*max_count+kongwei;
+        
+    }
+};

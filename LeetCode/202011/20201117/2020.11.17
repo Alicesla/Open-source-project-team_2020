@@ -1,0 +1,38 @@
+class Solution {
+public:
+    vector<vector<int>> allCellsDistOrder(int R, int C, int r0, int c0) {
+        vector<vector<bool>> visited(R,vector<bool>(C, 0));
+        vector<vector<int>> res(R*C);
+        int i = -1;
+        queue<short> q;
+        visited[r0][c0]=1;
+        q.push((r0<<8)+c0);
+        while(!q.empty())
+        {
+            r0 = q.front()>>8, c0 = q.front()&255;
+            q.pop();
+            res[++i] = {r0,c0}; 
+            if(r0-1>=0 && !visited[r0-1][c0]) 
+            {
+                visited[r0-1][c0]=1;
+                q.push(c0+((r0-1)<<8));
+            }
+            if(c0-1>=0 && !visited[r0][c0-1]) 
+            {
+                visited[r0][c0-1]=1;
+                q.push(c0-1+(r0<<8));
+            }
+            if(c0+1<C && !visited[r0][c0+1]) 
+            {
+                visited[r0][c0+1]=1;
+                q.push(c0+1+(r0<<8));
+            }
+             if(r0+1<R && !visited[r0+1][c0]) 
+            {
+                visited[r0+1][c0]=1;
+                q.push(c0+((r0+1)<<8));
+            }
+        }
+        return res;
+    }
+};

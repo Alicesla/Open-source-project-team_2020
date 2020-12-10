@@ -1,0 +1,37 @@
+class Solution {
+public:
+    int longestMountain(vector<int>& A) {
+     int n=A.size();
+     vector<int> left(n);//每个元素可以向左侧扩展的元素个数
+     for(int i=0;i<n;i++)
+     {
+         if(i==0) left[i]=0;
+         else 
+         {
+             if(A[i]<=A[i-1])
+             left[i]=0;
+             else
+             left[i]=left[i-1]+1;
+         }
+     }
+     vector<int> right(n);//每个元素可以向右侧扩展的元素个数
+     for(int i=n-1;i>=0;i--)
+     {
+         if(i==n-1) right[i]=0;
+         else 
+         {
+             if(A[i]<=A[i+1])
+             right[i]=0;
+             else
+             right[i]=right[i+1]+1;
+         }
+     }
+    int maxsize=0;
+    for(int i=0;i<n;i++)
+    {
+        if(left[i]>0&&right[i]>0)
+        maxsize=max(maxsize,left[i]+right[i]+1);
+    }
+    return maxsize;
+    }
+};

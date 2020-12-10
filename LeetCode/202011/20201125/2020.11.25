@@ -1,0 +1,34 @@
+class Solution {
+public:
+    string sortString(string s) {
+        string str="";
+        map<char,int>mp;
+        for (int i=0;i<s.size();i++){
+            mp[s[i]]++;
+        }
+        int i=0;bool flag=false;
+        while (i<s.size()){
+            i++;
+            if (flag==false){
+                for (char shou='a';shou<='z';shou++){
+                    if (mp[shou]!=0){
+                        mp[shou]--;
+                        str+=shou;
+                    }
+
+                }
+                flag=true;
+            }else{
+                for (char shou='z';shou>='a';shou--){
+                    if (mp[shou]!=0){
+                        mp[shou]--;
+                        str+=shou;
+                    }
+                }
+                flag=false;
+            }
+
+        }
+        return str;
+    }
+};

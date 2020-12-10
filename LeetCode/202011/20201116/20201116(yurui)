@@ -1,0 +1,30 @@
+class Solution {
+public:
+    vector<vector<int>> reconstructQueue(vector<vector<int>>& people) {
+      int n=people.size();
+      vector<vector<int>> res(n,vector<int>(2,-1));
+      //sort(people.begin(),people.end());
+     
+      
+       sort(people.begin(), people.end(), [](const vector<int>& u, const vector<int>& v) {
+            return u[0] < v[0] || (u[0] == v[0] && u[1] > v[1]);
+        });
+      
+     
+      for(int i=0;i<n;i++)
+      {
+          int k=people[i][1];
+          int count=0;
+          int j;
+          for(j=0;j<n;j++)
+          {
+              if(res[j][0]==-1)
+              count++;
+              if(count==k+1)
+              break;
+          }
+          res[j]=people[i];
+      }
+      return res;
+    }
+};

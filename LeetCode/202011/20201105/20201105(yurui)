@@ -1,0 +1,32 @@
+class Solution {
+public:
+    int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
+        int word_size = wordList[0].length(), list_size = wordList.size();
+        // 构建 转换树，某个结点的孩子结点为一个集合，包含了所有能够进行一次转换得到的有效单词。
+        // 按层从beginWord开始构建多叉树，直到遇到endWord，此时的层高+1即为最短路径。
+        vector<set<string>> levels(list_size + 1, set<string>()); //树最高不超过字典长度
+        vector<int> flags(list_size, 0);// 标记数组，用于标记哪些单词已经被 选择
+        levels[0].insert(beginWord);
+        for (int i = 0; i < levels.size(); i++) { // 尝试添加下一层的有效单词
+            for (auto it = levels[i].begin(); it != levels[i].end(); it++) { // 遍历当前层的每一个单词
+                // 从字典中选择能够进行一次字母转换，而得到的单词
+                for (int k= 0; k < list_size; k++) { 
+                    if (flags[k] == 1) continue;
+                    int l = 0, cnt = 0;
+                    while (l < word_size && cnt <= 1) {
+                        if ((*it)[l] != wordList[k][l]) cnt++;
+                        l++;
+                    }
+                    if (cnt == 1) {
+                        flags[k] = 1;
+                        levels[i+1].insert(wordList[k]);
+                        // 此时，得到最小层数，直接return
+                        if (wordList[k] == endWord) return i + 2;
+                    }
+                }
+            }
+        }
+        return 0;
+    }
+};
+

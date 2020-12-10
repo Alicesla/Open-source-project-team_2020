@@ -1,0 +1,24 @@
+class Solution {
+public:
+    bool isLongPressedName(string name, string typed) {
+        if (name[0]!=typed[0]) return false;
+        int i=1,j=1;
+        char c=name[0];
+        
+        while(i<name.length()&&j<typed.length()){
+            if (name[i]==typed[j]){
+                c=name[i];i++;j++;
+            } 
+            else 
+                if (typed[j]==c) j++;
+                else return false;
+        
+        }
+        if (i!=name.length()) return false;
+        while (j<typed.length()){
+            if (typed[j]!=c) return false;
+            j++;
+        }
+        return true;
+    }
+};

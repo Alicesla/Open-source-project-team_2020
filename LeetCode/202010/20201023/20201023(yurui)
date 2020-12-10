@@ -1,0 +1,42 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+//‘0’所对应的ascll码值为48，char a=2,实际上赋的为ascall为2，要想变为‘2’应该为char a=2+'0';
+class Solution {
+public:
+    bool isPalindrome(ListNode* head) {
+     if(!head||!head->next) return true;
+     string s1,s2;
+     ListNode*ptr,*cur,*rear;
+     cur=head;
+     ListNode*dummynode=new ListNode(0);
+     dummynode->next=head;
+     ptr=dummynode;
+     while(cur)
+     {
+         s1.push_back(char(cur->val+48));
+         rear=cur->next;
+         cur->next=ptr;
+         ptr=cur;
+         cur=rear;
+     }
+      head->next=NULL;
+    delete dummynode;
+    head=ptr;
+    while(head)
+    {s2.push_back(char(head->val+48));
+    head=head->next;
+    }
+    if(s1==s2)
+    return true;
+    else
+    return false;
+
+
+    }
+};

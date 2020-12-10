@@ -1,0 +1,25 @@
+/**
+141. 环形链表
+给定一个链表，判断链表中是否有环。
+如果链表中有某个节点，可以通过连续跟踪 next 指针再次到达，则链表中存在环。
+如果链表中存在环，则返回 true 。 否则，返回 false 。
+进阶：用 O(1)（即，常量）内存解决此问题
+*/
+
+//快慢指针
+class Solution {
+public:
+    bool hasCycle(ListNode* head) {
+        if (head == nullptr || head->next == nullptr) {
+            return false;
+        }
+        ListNode* slow = head;
+        ListNode* fast = head;
+        do{
+            if(fast==nullptr || fast->next==nullptr) return false;
+            slow=slow->next;
+            fast=fast->next->next;
+        }while(slow!=fast);
+        return true;
+    }
+};

@@ -1,0 +1,22 @@
+class Solution {
+public:
+    bool isAnagram(string s, string t) {
+        map<char,int>mp;
+        set<char>set_1;
+        set<char>set_2;
+        for(int i=0;i<s.size();i++){
+            set_1.insert(s[i]);
+            mp[s[i]]++;
+        }
+        for(int i=0;i<t.size();i++){
+            set_2.insert(t[i]);
+            if (mp[t[i]]==0) return false;
+            else mp[t[i]]--;
+        }
+        if (set_2.size()!=set_1.size()) return false;
+        for (int i=0;i<s.size();i++){
+            if (mp[s[i]]!=0) return false;
+        }
+        return true;
+    }
+};

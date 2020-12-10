@@ -1,0 +1,87 @@
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* sortList(ListNode* head) {
+        
+        ListNode * h = head;
+        int len = 0;
+        int intv = 1;
+        while(h)
+        {
+            h = h->next;
+            len++;
+        }
+        ListNode *res = new ListNode(0);
+        res->next = head;//res目的是为了找到链表头部
+        while(intv<len)
+        {
+            ListNode *pre = res;
+            ListNode *h = res->next;
+            ListNode *h1,*h2;
+            int i;
+            while(h)
+            {
+                h1 = h;
+                i = intv;
+                while( i && h )
+                {
+                    h = h->next;
+                    i = i - 1;
+                }
+                if(i) break;//i不为0即退出，h1指向的头长度小于intv，即不需要合并了
+                h2 = h;
+                i = intv;
+                while( i && h )
+                {
+                    h = h->next;
+                    i = i - 1;
+                }
+
+                int c1 = intv;
+                int c2 = intv - i;
+
+                // 合并
+                while(c1 && c2)
+                {
+                    if(h1->val < h2->val)
+                    {
+                        pre->next = h1;
+                        h1 = h1->next;
+                        c1 = c1 - 1;
+                    }
+                    else
+                    {
+                        pre->next = h2;
+                        h2 = h2->next;
+                        c2 = c2 - 1;
+                    }
+                    pre = pre->next;
+                }
+
+                pre->next = c1==0 ? h2:h1;
+
+                while(c1>0 || c2>0)
+                {
+                    pre = pre->next;
+                    c1--;
+                    c2--;
+                }
+                pre->next = h;
+            }
+
+            intv *= 2;
+        }
+        return res->next;
+    
+    }
+};
