@@ -1,0 +1,43 @@
+class Solution {
+public:
+    string predictPartyVictory(string senate) {
+        vector<char>vec;
+        for (int i=0;i<senate.size();i++){
+           vec.push_back(senate[i]);
+        }
+        int n=vec.size();
+        int i=0;
+        bool x=true;
+        while(true){
+            if (vec[i]=='N') {
+                i++;
+                i=i%n;
+                continue;
+            }
+            int j=(i+1)%n;
+            while(true){
+                if (vec[i]!=vec[j]&&vec[j]!='N'){
+                    vec[j]='N';
+                    break;
+                }
+                j++;j=j%n;
+                if (j==i) {
+                    x=false;
+                    break;
+                }
+            }
+            i++;
+            i=i%n;
+            if (x==false) break;
+        }
+        char c;
+        for (int i=0;i<vec.size();i++){
+            if(vec[i]!='N') {
+                c=vec[i];
+                break;
+            }
+        }
+        if (c=='R')return "Radiant";
+        else return"Dire";
+    }
+};
