@@ -1,0 +1,29 @@
+class Solution {
+public:
+    bool wordPattern(string pattern, string s) {
+        vector<string>vec;
+        string str;
+        for (int i=0;i<s.size();i++){
+            if (s[i]==' '){
+                vec.push_back(str);
+                str="";
+            }
+            else{
+                str +=s[i];
+            }
+        }
+        vec.push_back(str);
+        if (pattern.size()!=vec.size()) return false;
+        for (int i=0;i<pattern.size();i++){
+            for (int j=0;j<pattern.size();j++){
+                if (pattern[i]==pattern[j]){
+                    if (vec[i]!=vec[j]) return false;
+                }
+                else{
+                    if (vec[i]==vec[j]) return false;
+                }
+            }
+        }
+        return true;
+    }
+};
