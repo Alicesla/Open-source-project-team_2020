@@ -1,0 +1,51 @@
+class Solution {
+public:
+    int monotoneIncreasingDigits(int N) {
+        stack<int>data;
+        int xxx=N;
+        while (N>0){
+            data.push(N%10);
+            N=N/10;
+        }
+        stack<int>s;
+        int temp=data.top();
+        s.push(temp);
+        data.pop();
+        while(!data.empty()){
+            if(data.top()>=s.top()){
+                s.push(data.top());
+                data.pop();
+            }else{
+                data.push(s.top());
+                s.pop();
+                break;
+            }
+        }
+        if (data.empty()) return xxx;
+        while(!s.empty()){
+            if (data.top()-1>=s.top()){
+                s.push(data.top()-1);
+                data.pop();
+                break;
+            }else{
+                data.push(s.top());
+                s.pop();
+            }
+        }
+        if (s.empty()){
+            s.push(data.top()-1);
+            data.pop();
+        }
+        while (!data.empty()){
+            data.pop();s.push(9);
+        }
+        int  sum=0;
+        int  index=1;
+        while(!s.empty()){
+            sum+=s.top()*index;
+            s.pop();
+            index*=10;
+        }
+        return sum;
+    }
+};
