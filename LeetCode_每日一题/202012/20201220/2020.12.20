@@ -1,0 +1,35 @@
+class Solution {
+public:
+    string removeDuplicateLetters(string str) {
+        vector<int>vec(26,0);//用于记录字母出现次数
+        vector<int>v(26,0);
+        for (int i=0;i<str.size();i++){
+            vec[str[i]-'a']++;
+        }
+        stack<char>s;s.push(str[0]);vec[str[0]-'a']--;v[str[0]-'a']++;
+        bool flag=false;
+        for(int i=1;i<str.size();i++){
+            flag=false;
+            if(v[str[i]-'a']==1){vec[str[i]-'a']--;continue;}
+            while (!s.empty()&&str[i]<s.top()&&vec[s.top()-'a']>0){
+                v[s.top()-'a']--;
+                s.pop();
+                flag=true;  
+            }
+            if (v[str[i]-'a']==0){
+                s.push(str[i]);
+                v[str[i]-'a']++;
+                vec[str[i]-'a']--;
+            }else{
+                vec[str[i]-'a']--;
+            }         
+        }
+        string ans="";
+        while(!s.empty()){
+            ans+=s.top();
+            s.pop();
+        }
+        reverse(ans.begin(),ans.end());
+        return ans;
+    }
+};
