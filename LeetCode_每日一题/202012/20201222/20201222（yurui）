@@ -1,0 +1,23 @@
+  vector<vector<int>> res;
+        vector<int> temp;
+        queue<TreeNode*> q;
+        if(root) q.push(root);
+        int count=1;
+        while(!q.empty())
+        {
+             int n=q.size();
+             for(int i=0;i<n;i++)
+             {
+                 TreeNode* node=q.front();
+                 q.pop();
+                 temp.push_back(node->val);
+                 if(node->left) q.push(node->left);
+                 if(node->right) q.push(node->right);
+             }
+             if(count%2==0) reverse(temp.begin(),temp.end());
+             res.push_back(temp);
+             count++;
+             temp.clear();
+        }
+        return res;
+    }
