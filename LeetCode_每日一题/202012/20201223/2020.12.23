@@ -1,0 +1,17 @@
+class Solution {
+public:
+    int firstUniqChar(string s) {
+        vector<int>v(2,-1);
+        vector<vector<int>>vec(26,v);
+        for (int i=0;i<s.size();i++){
+            if (vec[s[i]-'a'][1]==-1) {
+                vec[s[i]-'a'][0]=1;
+                vec[s[i]-'a'][1]=i;
+            }else vec[s[i]-'a'][0]++;
+            //cout<<vec[s[i]-'a'][0]<<vec[s[i]-'a'][1]<<endl;
+        }
+        for (int i=0;i<s.size();i++){
+            if (vec[s[i]-'a'][0]==1) return vec[s[i]-'a'][1];
+        }return -1;
+    }
+};
