@@ -1,0 +1,25 @@
+class Solution {
+public:
+    vector<vector<int>> largeGroupPositions(string s) {
+        vector<vector<int>>res;
+        if (s.size()==0) return res;
+        int left=0,right=0;
+        char temp=s[0];
+        vector<int>v(2);
+        for (int i=1;i<s.size();i++){
+            if (s[i]==temp){
+                right=i;
+            }else{
+                if (right-left>=2) {
+                    v[0]=left;v[1]=right;res.push_back(v);
+                }
+                temp=s[i];
+                left=i;right=i;
+            }
+        }
+        if (right!=left&&right-left>=2){
+            v[0]=left;v[1]=right;res.push_back(v);
+        }
+        return res;
+    }
+};
