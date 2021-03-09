@@ -1,0 +1,14 @@
+class Solution {
+public:
+    vector<int> countBits(int num) {
+        vector <int>vec;
+        vec.push_back(0);
+        if (num==0) return vec;
+        vec.push_back(1);
+        for (int i=2;i<=num;i++){
+            int temp=vec[i/2]+vec[i%2];
+            vec.push_back(temp);
+        }
+        return vec;
+    }
+};
