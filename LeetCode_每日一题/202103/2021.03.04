@@ -1,0 +1,22 @@
+class Solution {
+public:
+
+    int maxEnvelopes(vector<vector<int>>& envelopes) {
+        //先高度后宽度排序
+        vector <int>vec(envelopes.size(),1);
+        sort(envelopes.begin(), envelopes.end(),[](const vector<int> &a, const vector<int> &b) { return a[1] < b[1];});
+        sort(envelopes.begin(), envelopes.end(), [](const vector<int> &a, const vector<int> &b) { return a[0] < b[0];});
+        for (int i=1;i<envelopes.size();i++){
+            for (int j=i-1;j>=0;j--){
+                if (envelopes[i][0]>envelopes[j][0]&&envelopes[i][1]>envelopes[j][1])
+                    vec[i]=max(vec[i],vec[j]+1);
+            }
+        }
+        int res=1;
+        for (int i=0;i<vec.size();i++){
+            cout<<vec[i]<<endl;
+            res=max(res,vec[i]);
+        }
+        return res;
+    }
+};
