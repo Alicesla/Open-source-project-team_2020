@@ -1,0 +1,64 @@
+class MyQueue
+{
+public:
+    /** Initialize your data structure here. */
+    stack<int> stak1; //push栈实现队列push操作
+    stack<int> stak2; //pop栈实现队列pop操作
+    MyQueue()
+    {
+    }
+
+    /** Push element x to the back of queue. */
+    void push(int x)
+    {
+        //直接将元素push进push栈stak1
+        stak1.push(x);
+    }
+
+    /** Removes the element from in front of queue and returns that element. */
+    int pop()
+    {
+        //将stak1所有元素push进stak2,则stak2栈顶元素为队头元素
+        while(!stak1.empty())
+        {
+            stak2.push(stak1.top());
+            stak1.pop();
+        }
+
+        //取队头元素，并将队头元素pop
+        int s = stak2.top();
+        stak2.pop();
+
+        //将stak2中元素重新放回stak1中
+        while(!stak2.empty())
+        {
+            stak1.push(stak2.top());
+            stak2.pop();
+        }
+        return s;
+    }
+
+    /** Get the front element. */
+    int peek()
+    {
+        while(!stak1.empty())
+        {
+            stak2.push(stak1.top());
+            stak1.pop();
+        }
+        int s = stak2.top();
+
+        while(!stak2.empty())
+        {
+            stak1.push(stak2.top());
+            stak2.pop();
+        }
+        return s;
+    }
+
+    /** Returns whether the queue is empty. */
+    bool empty()
+    {
+        return stak1.empty() && stak2.empty();
+    }
+};
